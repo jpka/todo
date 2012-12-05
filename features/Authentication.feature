@@ -1,12 +1,19 @@
-Feature: Task listing
-  In order to keep track of my tasks
+Feature: Authentication
+  In order to manage my todo tasks
   As a busy fellow
-  I want to see them listed
-  
-  Scenario: Visiting the page
+  I want to login first
+
+  Background:
     Given I am not logged in
+
+  Scenario: Visiting the page
     When I visit the page
     Then I should see the login form
+
+  Scenario: Filling the form
+    Given I am on the login form
+    When I try to login with random info
+    Then I don't get in
 
   # Scenario: Reading when online
   #   When I search for "Ulysses"

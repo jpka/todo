@@ -48,7 +48,8 @@ module.exports = function( grunt ) {
           'php/app/components/': 'frontend/app/components/**',
           'php/app/scripts/vendor/bootstrap/': 'frontend/app/scripts/vendor/bootstrap/**',
           'php/app/scripts/vendor/': 'frontend/app/scripts/vendor/**',
-          'php/index.html': 'frontend/app/index.html'
+          'php/app/templates/': 'frontend/app/templates/**',
+          'php/index.html': 'frontend/app/index.html',
         }
       }
     },

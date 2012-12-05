@@ -7,8 +7,8 @@
         "": "start"
       },
       start: function() {
-        return require(["modules/library"], function(Library) {
-          return $(".container").append((new Library.View()).$el);
+        return require(["modules/login"], function(Login) {
+          return $(".container").append((new Login()).$el);
         });
       }
     });

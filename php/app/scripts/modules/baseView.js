@@ -11,7 +11,7 @@
       render: function() {
         var _this = this;
         if (this.template != null) {
-          return $.get("/templates/" + this.template + ".hamlc", function(template) {
+          return $.get("app/templates/" + this.template + ".hamlc", function(template) {
             return _this.$el.html(hamlc.compile(template)(_this.model));
           });
         }

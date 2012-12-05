@@ -1,0 +1,10 @@
+:css
+  #login-form input {
+    display: block;
+  }
+
+%form#login-form
+  %input#username{type: "text", placeholder: "username"}
+  %input#password{type: "password", placeholder: "password"}
+  %button#login-button Login
+  %button#register-button Register

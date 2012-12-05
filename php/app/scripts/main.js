@@ -2,9 +2,7 @@
 
   require(["config", "app", "router"], function(config, app, Router) {
     app.router = new Router();
-    Backbone.history.start({
-      pushState: true
-    });
+    Backbone.history.start();
     return $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
       var href, root;
       href = {
