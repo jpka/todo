@@ -21,11 +21,12 @@ Given /^I am on the login form$/ do
   visit "/"
 end
 
-When /^I try to login with random info$/ do
-  fill_in "username", :with => "random"
-  fill_in "password", :with => "random"
+When /^I try to login with "(.*?)" and "(.*?)"$/ do |username, password|
+  fill_in "username", :with => username
+  fill_in "password", :with => password
+  click_button "login-button"
 end
 
-Then /^I don't get in$/ do
-  page.should have_content "Invalid user data"
+Then /^I see "(.*?)"$/ do |message|
+  page.should have_content message
 end

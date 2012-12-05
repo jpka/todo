@@ -1,5 +1,6 @@
 define ["jquery", "lodash", "backbone"], ($, _, Backbone) ->
 
-  app = {}
+  app =
+    url: "http://localhost/dev/todos/php/index.php?r="
 
   app
