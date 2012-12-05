@@ -1,0 +1,8 @@
+{
+  "name": "Todo",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt-compass": "~0.3.7",
+    "grunt-contrib": "~0.3.0"
+  }
+}
