@@ -6,9 +6,6 @@ require("models/Model.php");
 require("models/User.php");
 require("models/Task.php");
 
-$apiRoute = "/dev/todos/php/api";
-$cookieTime = 60*60*24*30;
-
 $r = new Respect\Rest\Router($apiRoute);
 
 $r->always("Accept", array("application/json" => "json_encode"));
@@ -70,7 +67,7 @@ $r->post("/login", function() {
   $username = isset($_COOKIE["username"]) ? $_COOKIE["username"] : $_POST["username"];
   $password = isset($_COOKIE["password"]) ? $_COOKIE["password"] : $_POST["password"];
   return authSuccesful($username, $password);
-})->by(authenticate);
+})->by("authenticate");
 
 $r->get("/logout", function() {
   setcookie("username", "", time() + 60*60*24*30, $apiRoute . "/");
@@ -89,26 +86,26 @@ $r->get("/*/tasks", function($user) {
   if (isset($_GET["sortedBy"]))
     $sortOpts = array("sort" => array($_GET["sortedBy"] => isset($_GET["desc"]) ? -1 : 1));
   return Task::findAllExposed(array("user" => $user), $sortOpts);
-})->by(authenticate);
+})->by("authenticate");
 
 $r->post("/*/tasks", function($user) {
   $task = new Task(postOrPutData());
   $task->save();
   return $task->expose();
-})->by(authenticate);
+})->by("authenticate");
 
 $r->get("/*/tasks/*", function($user, $id) {
   return Task::findOne(array("username" => $user, "id" => intval($id)))->expose();
-})->by(authenticate);
+})->by("authenticate");
 
 $r->put("/*/tasks/*", function($user, $id) {
   $task = Task::findOne(array("user" => $user, "id" => intval($id)));
   $task->update(postOrPutData());
   return true;
-})->by(authenticate);
+})->by("authenticate");
 
 $r->delete("/*/tasks/*", function($user, $id) {
   $task = Task::findOne(array("user" => $user, "id" => intval($id)));
   $task->destroy();
   return true;
-})->by(authenticate);
+})->by("authenticate");

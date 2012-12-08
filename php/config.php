@@ -1,8 +1,5 @@
 <?php
-// initialize connection and database name
-// $username = "jpka";
-// $password = "0uroboroS";
-$host = "localhost";
 
-BaseMongoRecord::$connection = new Mongo("mongodb://{$host}");
+$apiRoute = "/api";
+BaseMongoRecord::$connection = new Mongo("mongodb://jpka:0uroboroS@ds045137.mongolab.com:45137/todo");
 BaseMongoRecord::$database = "todo";
