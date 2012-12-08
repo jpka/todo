@@ -21,7 +21,7 @@
       start: function() {
         var _this = this;
         return $.ajax({
-          type: "POST",
+          cache: false,
           url: "" + app.url + "/login",
           data: "",
           dataType: "json",

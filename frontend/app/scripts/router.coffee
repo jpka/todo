@@ -16,7 +16,7 @@ define ["app", "modules/login", "modules/tasks"], (app, Login, Tasks) ->
 
     start: ->
       $.ajax
-        type: "POST"
+        cache: false
         url: "#{app.url}/login"
         data: ""
         dataType: "json"

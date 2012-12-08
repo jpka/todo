@@ -18,7 +18,7 @@
       login: function(registerFirst) {
         var _this = this;
         return $.ajax({
-          type: "POST",
+          cache: false,
           url: ("" + app.url + "/") + (registerFirst ? "register" : "login"),
           dataType: "json",
           data: this.$el.serialize(),

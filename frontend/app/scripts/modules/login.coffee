@@ -15,7 +15,7 @@ define ["app", "modules/baseView", "modules/tasks"], (app, View, Tasks) ->
 
     login: (registerFirst) ->
       $.ajax
-        type: "POST"
+        cache: false
         url: "#{app.url}/" + if registerFirst then "register" else "login"
         dataType: "json"
         data: @$el.serialize()

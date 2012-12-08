@@ -15,10 +15,7 @@ class UnauthorizedException extends Exception {}
 $r->exceptionRoute("UnauthorizedException", function (UnauthorizedException $e) {
   header(" ", true, 401);
   $message = $e->getMessage();
-  if (!empty($message))
-    return array("error" => $message);
-  else
-    return false;
+  return array("error" => empty($message) ? "Unauthorized" : $message);
 });
 
 $r->exceptionRoute("Exception", function (Exception $e) {
@@ -37,12 +34,12 @@ function authSuccesful($username, $password) {
 }
 
 function authenticate($user) {
-  $username = isset($_COOKIE["username"]) ? $_COOKIE["username"] : $_POST["username"];
+  $username = isset($_COOKIE["username"]) ? $_COOKIE["username"] : $_GET["username"];
   if (isset($user) && $user !== $username) {
     throw new UnauthorizedException();
     return false;
   }
-  $password = isset($_COOKIE["password"]) ? $_COOKIE["password"] : $_POST["password"];
+  $password = isset($_COOKIE["password"]) ? $_COOKIE["password"] : $_GET["password"];
   $user = new User(array("username" => $username, "password" => $password));
 
   try {
@@ -56,16 +53,16 @@ function authenticate($user) {
 
 function postOrPutData() {
   $data = array();
-  foreach (json_decode(file_get_contents("php://input"), true) as $field => $value) {
+  foreach ((empty($_POST) ? json_decode(file_get_contents("php://input"), true) : $_POST) as $field => $value) {
     if (!empty($value))
       $data[$field] = $value;
   }
   return $data;
 }
 
-$r->post("/login", function() {
-  $username = isset($_COOKIE["username"]) ? $_COOKIE["username"] : $_POST["username"];
-  $password = isset($_COOKIE["password"]) ? $_COOKIE["password"] : $_POST["password"];
+$r->get("/login", function() {
+  $username = isset($_COOKIE["username"]) ? $_COOKIE["username"] : $_GET["username"];
+  $password = isset($_COOKIE["password"]) ? $_COOKIE["password"] : $_GET["password"];
   return authSuccesful($username, $password);
 })->by("authenticate");
 
@@ -90,18 +87,19 @@ $r->get("/*/tasks", function($user) {
 
 $r->post("/*/tasks", function($user) {
   $task = new Task(postOrPutData());
+  $task->user = $user;
   $task->save();
   return $task->expose();
 })->by("authenticate");
 
 $r->get("/*/tasks/*", function($user, $id) {
-  return Task::findOne(array("username" => $user, "id" => intval($id)))->expose();
+  return Task::findOne(array("user" => $user, "id" => intval($id)))->expose();
 })->by("authenticate");
 
 $r->put("/*/tasks/*", function($user, $id) {
   $task = Task::findOne(array("user" => $user, "id" => intval($id)));
   $task->update(postOrPutData());
-  return true;
+  return $task->expose();
 })->by("authenticate");
 
 $r->delete("/*/tasks/*", function($user, $id) {
