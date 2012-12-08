@@ -1,0 +1,10 @@
+%td.desc.editable= @description
+%td.due-date.editable= @dueDate
+%td.priority.editable= @priority
+%td
+  - if @done
+    %input.task-done{type: "checkbox", checked: "checked"}
+  - else
+    %input.task-done{type: "checkbox"}
+%td
+  %span.remove.clickable X

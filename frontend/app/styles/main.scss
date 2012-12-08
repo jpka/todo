@@ -1,1 +1,90 @@
 @import "compass_twitter_bootstrap";
+
+.error {
+  color: red;
+}
+
+.clear {
+  clear: both;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+#login-form input {
+  display: block;
+}
+
+.info {
+  font-size: 10px;
+  float:left;
+}
+
+#logout {
+  float: left;
+}
+
+h1.tasks {
+  float: left;
+}
+
+#task-table {
+
+  #create-task {
+    height: 30px;
+    vertical-align: top;
+  }
+
+  tbody {
+    tr {
+      background-color: #EEE;
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
+  thead {
+    tr.header {
+      background-color: black;
+      color: white;
+    }
+
+    .sort:hover {
+      background-color:white;
+      color:black;
+    }
+  }
+
+  td {
+    vertical-align: top;
+    text-align: center;
+    width: 200px;
+  }
+
+  .description-td {
+    width: 250px;
+    input {
+      width: 200px;
+    }
+  }
+
+  .due-date-td {
+    width: 150px;
+    input {
+      width: 100px;
+    }
+  }
+
+  .button-td {
+    width: 150px;
+  }
+
+  .priority-td {
+    width: 80px;
+    input {
+      width: 50px;
+    }
+  }
+}

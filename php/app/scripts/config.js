@@ -21,9 +21,6 @@
           process.browser = true;
           return require("./hamlc");
         }
-      },
-      monocle: {
-        exports: "Monocle"
       }
     }
   });

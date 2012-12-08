@@ -8,10 +8,17 @@ define ["app", "hamlCoffee"], (app, hamlc)->
       @$el.append el
       el
 
-    render: ->
+    serialize: ->
+      if @model?
+        @model.attributes
+      else
+        @
+
+    render: (cb) ->
       if @template?
         $.get "app/templates/#{@template}.hamlc", (template) =>
-          @$el.html hamlc.compile(template)(@model)
+          @$el.html hamlc.compile(template)(@serialize())
+          cb() if cb
 
     initialize: ->
       @render()

@@ -8,11 +8,21 @@
         this.$el.append(el);
         return el;
       },
-      render: function() {
+      serialize: function() {
+        if (this.model != null) {
+          return this.model.attributes;
+        } else {
+          return this;
+        }
+      },
+      render: function(cb) {
         var _this = this;
         if (this.template != null) {
           return $.get("app/templates/" + this.template + ".hamlc", function(template) {
-            return _this.$el.html(hamlc.compile(template)(_this.model));
+            _this.$el.html(hamlc.compile(template)(_this.serialize()));
+            if (cb) {
+              return cb();
+            }
           });
         }
       },

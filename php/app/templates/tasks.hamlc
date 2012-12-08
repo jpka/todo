@@ -1,0 +1,39 @@
+%span.info
+  *click on Due Date and Priority to sort (click again to invert order)
+.clear
+%span.info
+  *double click on task field to edit
+
+.clear
+
+%h1.tasks= "#{@user}'s tasks"
+%span#logout.clickable (logout)
+
+.clear
+
+%form#task-form
+  %table#task-table
+    %thead
+      %tr
+        .error
+        %td.description-td 
+          %input.description{type: "text", name: "description", placeholder: "Task description"}
+        %td.due-date-td
+          %input.due-date{type: "date", name: "due-date"}
+        %td.priority-td
+          %input.priority{type: "number", name: "priority", min: 1, max: 10, placeholder: "priority"}
+        %td.button-td 
+          %button#create-task Create
+        %td
+      %tr.header
+        %th
+          Description
+        %th
+          #sort-by-due-date.sort.clickable Due date*
+        %th
+          #sort-by-priority.sort.clickable Priority*
+        %th
+          Done
+        %th
+      
+    %tbody

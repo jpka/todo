@@ -19,5 +19,3 @@ require.config
         process.browser = true
 
         require("./hamlc")
-    monocle:
-      exports: "Monocle"

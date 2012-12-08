@@ -5,6 +5,8 @@ require ["config", "app", "router"], (config, app, Router) ->
   Backbone.history.start()
     #pushState: true
 
+  $.ajaxSetup({cache:false})
+
   # // All navigation that is relative should be passed through the navigate
   # // method, to be processed by the router. If the link has a `data-bypass`
   # // attribute, bypass the delegation completely.

@@ -1,18 +1,39 @@
 (function() {
 
-  define(["app"], function() {
+  define(["app", "modules/login", "modules/tasks"], function(app, Login, Tasks) {
     var Router;
-    Router = Backbone.Router.extend({
+    return Router = Backbone.Router.extend({
       routes: {
         "": "start"
       },
+      login: function() {
+        return $("#content").html((new Login()).$el);
+      },
+      logout: function() {
+        var _this = this;
+        return $.getJSON("" + app.url + "/logout", function() {
+          return _this.login();
+        });
+      },
+      tasks: function(user, tasks) {
+        return $("#content").html((new Tasks(user, tasks)).$el);
+      },
       start: function() {
-        return require(["modules/login"], function(Login) {
-          return $(".container").append((new Login()).$el);
+        var _this = this;
+        return $.ajax({
+          type: "POST",
+          url: "" + app.url + "/login",
+          data: "",
+          dataType: "json",
+          success: function(data) {
+            return _this.tasks(data.username, data.tasks);
+          },
+          error: function() {
+            return _this.login();
+          }
         });
       }
     });
-    return Router;
   });
 
 }).call(this);

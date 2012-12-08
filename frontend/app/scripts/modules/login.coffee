@@ -1,17 +1,28 @@
-define ["modules/baseView", "modules/user"], (View, User) ->
+define ["app", "modules/baseView", "modules/tasks"], (app, View, Tasks) ->
 
   View.extend
+    tagName: "form"
+    id: "login-form"
     template: "login"
 
     events:
-      "click #login-button": "login"
+      "click #login-button": (e) -> 
+        e.preventDefault()
+        @login()
+      "click #register-button": (e) ->
+        e.preventDefault()
+        @login(true)
 
-    login: (e) ->
-      e.preventDefault()
-      user = new User
-        username: $el.find("#username").val()
-        password: $el.find("#password").val()
+    login: (registerFirst) ->
+      $.ajax
+        type: "POST"
+        url: "#{app.url}/" + if registerFirst then "register" else "login"
+        dataType: "json"
+        data: @$el.serialize()
+        error: (xhr) =>
+          @showError JSON.parse(xhr.responseText).error if xhr.responseText
+        success: (data) =>
+          @$el.replaceWith (new Tasks(data.username, data.tasks)).$el
 
-      auth = user.authenticate()
-      if auth.err
-        $el.find("#login-error").text(auth.err)
+    showError: (error) ->
+      @$el.find("#login-error").text error
