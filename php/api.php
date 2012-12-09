@@ -54,7 +54,7 @@ function authenticate($user) {
 function postOrPutData() {
   $data = array();
   foreach ((empty($_POST) ? json_decode(file_get_contents("php://input"), true) : $_POST) as $field => $value) {
-    if (!empty($value))
+    if ($value === false || !empty($value))
       $data[$field] = $value;
   }
   return $data;

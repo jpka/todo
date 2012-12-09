@@ -51,6 +51,13 @@ class Task extends MongoModel {
     return true;
   }
 
+  public function validatesDone($done) {
+    if (!is_bool($done))
+      throw new Exception("Done must be a bool value");
+    
+    return true;
+  }
+
   public function beforeSave() {
     if (is_null($this->id)) {
       $count = count(Task::findAll(array("user" => $this->user)));
